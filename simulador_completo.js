@@ -31,6 +31,10 @@ function ocultarSecciones(){
   let listaClass2 = componente2.classList;
   listaClass2.remove("activa");
 
+  let componente3 = document.getElementById("credito");
+  let listaClass3 = componente3.classList;
+  listaClass3.remove("activa");
+
 
 }
 
@@ -41,8 +45,7 @@ function mostrarSeccion(id) { // funcion q activa parte visual
     listaClass.add("activa");  //activa
 }
 
-mostrarSeccion("parametros");
-mostrarSeccion("clientes");
+
 
 function guardarTasa(){
   let tasa = recuperarFloat("tasaInteres");
@@ -152,6 +155,28 @@ function seleccionarCliente(cedula){
 
 }
 
+function buscarClienteCredito(){
+
+    let cedula = recuperaraTexto("buscarCedulaCredito");
+    let cliente = buscarCliente(cedula);
+    if(cliente == null){
+        document.getElementById("datosClienteCredito").innerHTML =
+        "Cliente no encontrado";
+
+    }else{
+        let datos =
+              "<h3>Datos del Cliente</h3>" +
+              "<p><strong>Cedula:</strong> " + cliente.cedula + "</p>" +
+              "<p><strong>Nombre:</strong> " + cliente.nombre + "</p>" +
+              "<p><strong>Apellido:</strong> " + cliente.apellido + "</p>" +
+              "<p><strong>Ingresos:</strong> " + cliente.ingresos + "</p>" +
+              "<p><strong>Egresos:</strong> " + cliente.egresos + "</p>";
+
+        document.getElementById("datosClienteCredito").innerHTML = datos;
+    }
+}
+
+
 function limpiar (){
   document.getElementById("txtCedula").value= "";
   document.getElementById("txtNombre").value= "";
@@ -159,3 +184,4 @@ function limpiar (){
   document.getElementById("txtIngresos").value= "";
   document.getElementById("txtEgresos").value= "";
 }
+
