@@ -43,3 +43,12 @@ function mostrarSeccion(id) { // funcion q activa parte visual
 
 mostrarSeccion("parametros");
 mostrarSeccion("clientes");
+
+function guardarTasa(){
+  let tasa = recuperarFloat("tasaInteres");
+  if(tasa>=10 && tasa<=20){
+    mostrarTexto("mensajeTasa","Tasa configurada correctamente: "+tasa+" %"); //mostrar texto: util.
+  }else{
+    mostrarTexto("mensajeTasa","La tasa debe estar entre 10 y 20 %");  //funcion utilitarios
+  }
+}
