@@ -54,33 +54,61 @@ function guardarTasa(){
 }
 
 
-function guardarCliente (){
-  let cedula = recuperaraTexto ("txtCedula");
-  let nombre = recuperaraTexto ("txtNombre");
-  let apellido = recuperaraTexto ("txtApellido");
-  let ingresos = recuperarFloat ("txtIngresos");
-  let egresos = recuperarFloat ("txtEgresos");
+function guardarCliente(){
 
-  let cliente = {};
-  cliente.cedula= cedula;
-  cliente.nombre = nombre;
-  cliente.apellido = apellido;
-  cliente.ingresos = ingresos;
-  cliente.egresos = egresos;
+  let cedula = recuperaraTexto("txtCedula");
+  let nombre = recuperaraTexto("txtNombre");
+  let apellido = recuperaraTexto("txtApellido");
+  let ingresos = recuperarFloat("txtIngresos");
+  let egresos = recuperarFloat("txtEgresos");
 
-  clientes.push(cliente);
+  let cliente = buscarCliente(cedula);
+
+  // CREAR NUEVO CLIENTE
+  if(clienteSeleccionado == null){
+
+      if(cliente != null){
+
+          alert("El cliente ya existe");
+
+          return;
+
+      }
+
+      let nuevoCliente = {};
+
+      nuevoCliente.cedula = cedula;
+      nuevoCliente.nombre = nombre;
+      nuevoCliente.apellido = apellido;
+      nuevoCliente.ingresos = ingresos;
+      nuevoCliente.egresos = egresos;
+
+      clientes.push(nuevoCliente);
+
+  }else{
+
+      // ACTUALIZAR CLIENTE
+      clienteSeleccionado.nombre = nombre;
+      clienteSeleccionado.apellido = apellido;
+      clienteSeleccionado.ingresos = ingresos;
+      clienteSeleccionado.egresos = egresos;
+
+      clienteSeleccionado = null;
+
+  }
 
   pintarClientes();
+
+  limpiar();
 
 }
 
 function pintarClientes(){
     let contenidoTabla = "";
+    let tabla = document.getElementById("tablaClientes");
 
     for(let i = 0; i < clientes.length; i++){
-
         let cliente = clientes[i];
-
         contenidoTabla +=
         "<tr>" +
             "<td>" + cliente.cedula + "</td>" +
@@ -88,13 +116,46 @@ function pintarClientes(){
             "<td>" + cliente.apellido + "</td>" +
             "<td>" + cliente.ingresos + "</td>" +
             "<td>" + cliente.egresos + "</td>" +
-            "<td>" +
-                "<button>Actualizar</button>" +
-            "</td>" +
+            "<td> <button onclick='seleccionarCliente(" + cliente.cedula + ")'>Actualizar</button>" + "<button>"+'Eliminar'+"</button></td>" +
         "</tr>";
 
     }
 
-    document.getElementById("tablaClientes").innerHTML = contenidoTabla;
+    
+    tabla.innerHTML = contenidoTabla;
+}
 
+function buscarCliente(cedula){
+    for(let i = 0; i < clientes.length; i++){
+        let cliente = clientes[i];
+        if(cliente.cedula == cedula){
+            return cliente;
+        }
+    }
+    return null;
+}
+
+
+function seleccionarCliente(cedula){
+    let cliente = buscarCliente(cedula);
+
+    
+
+    if(cliente !=null){
+    clienteSeleccionado= cliente;
+    mostrarTextoEnCaja("txtCedula", cliente.cedula);
+    mostrarTextoEnCaja("txtNombre", cliente.nombre);
+    mostrarTextoEnCaja("txtApellido", cliente.apellido);
+    mostrarTextoEnCaja("txtIngresos", cliente.ingresos);
+    mostrarTextoEnCaja("txtEgresos", cliente.egresos);
+    }
+
+}
+
+function limpiar (){
+  document.getElementById("txtCedula").value= "";
+  document.getElementById("txtNombre").value= "";
+  document.getElementById("txtApellido").value= "";
+  document.getElementById("txtIngresos").value= "";
+  document.getElementById("txtEgresos").value= "";
 }
