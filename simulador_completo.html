@@ -67,16 +67,17 @@
   <h2>Solicitar Crédito</h2>
 
   <input type="text" id="buscarCedulaCredito">
-  <button onclick="buscarClienteCredito()">Buscar cliente</button>
+  <button onclick="buscarClienteCredito();">Buscar cliente</button>
 
   <div id="datosClienteCredito" class="card"></div>
 
-  <input type="number" id="montoCredito" >
-  <input type="number" id="plazoCredito" >
+  <input type="number" id="montoCredito" placeholder="Credito Solicitado">
+  <input type="number" id="plazoCredito" placeholder="Años plazo">
+  
 
   <br>
 
-  <button onclick="calcularCredito()">Calcular crédito</button>
+  <button onclick="calcularCredito();">Calcular crédito</button>
 
   <div id="resultadoCredito"></div>
 
@@ -89,5 +90,6 @@
 
 <script src="simulador_completo.js"></script>
 <script src="utilitarios.js"></script>
+<script src="funciones.js"></script>
 </body>
 </html>

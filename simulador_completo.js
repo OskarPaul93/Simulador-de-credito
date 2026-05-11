@@ -50,6 +50,7 @@ function mostrarSeccion(id) { // funcion q activa parte visual
 function guardarTasa(){
   let tasa = recuperarFloat("tasaInteres");
   if(tasa>=10 && tasa<=20){
+    tasaInteres=tasa;
     mostrarTexto("mensajeTasa","Tasa configurada correctamente: "+tasa+" %"); //mostrar texto: util.
   }else{
     mostrarTexto("mensajeTasa","La tasa debe estar entre 10 y 20 %");  //funcion utilitarios
@@ -119,7 +120,8 @@ function pintarClientes(){
             "<td>" + cliente.apellido + "</td>" +
             "<td>" + cliente.ingresos + "</td>" +
             "<td>" + cliente.egresos + "</td>" +
-            "<td> <button onclick='seleccionarCliente(" + cliente.cedula + ")'>Actualizar</button>" + "<button>"+'Eliminar'+"</button></td>" +
+            "<td> <button onclick='seleccionarCliente(" + cliente.cedula + ")'>Actualizar</button>" +
+            "<button onclick='eliminarCliente(" + cliente.cedula + ")'>Eliminar</button></td>"
         "</tr>";
 
     }
@@ -185,3 +187,58 @@ function limpiar (){
   document.getElementById("txtEgresos").value= "";
 }
 
+function eliminarCliente(cedula){
+    for(let i = 0; i < clientes.length; i++){
+        let cliente = clientes[i];
+        if(cliente.cedula == cedula){
+            clientes.splice(i, 1);
+            break;
+        }
+    }
+    pintarClientes();
+}
+
+function calcularCredito(){
+
+    let cedula = recuperaraTexto("buscarCedulaCredito");
+    let cliente = buscarCliente(cedula);
+
+    if(cliente == null){
+        document.getElementById("resultadoCredito").innerHTML =
+        "Cliente no encontrado";
+        return;
+    }
+
+    let monto = recuperarFloat("montoCredito");
+    let plazo = recuperarFloat("plazoCredito");
+    let disponible = calcularDisponible(cliente.ingresos, cliente.egresos);
+    let capacidadPago = calcularCapacidadPago(disponible);
+    let interes = calcularInteresSimple(monto, tasaInteres, plazo);
+    let totalPagar = calcularTotalPagar(monto, interes);
+    let cuotaMensual = calcularCuotaMensual(totalPagar, plazo);
+    let aprobado = aprobarCredito(capacidadPago, cuotaMensual);
+    let resultadoCredito =document.getElementById("resultadoCredito");
+    let boton = document.getElementById("btnSolicitarCredito");
+
+    let resultado = "";
+
+    if(aprobado == true){
+        resultado = "APROBADO";
+        resultadoCredito.className = "aprobado";
+        boton.disabled = false;
+    }else{
+        resultado = "RECHAZADO";
+        resultadoCredito.className = "rechazado";
+        boton.disabled = true;
+    }
+
+    resultadoCredito.innerHTML =
+        "Capacidad de pago: " + capacidadPago + "<br>" +
+        "Total a pagar: " + totalPagar + "<br>" +
+        "Cuota mensual: " + cuotaMensual + "<br>" +
+        "RESULTADO: " + resultado;
+}
+
+function solicitarCredito(){
+    alert("Su crédito ha sido aprobado");
+}
