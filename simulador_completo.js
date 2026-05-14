@@ -65,6 +65,8 @@ function guardarCliente(){
   let apellido = recuperaraTexto("txtApellido");
   let ingresos = recuperarFloat("txtIngresos");
   let egresos = recuperarFloat("txtEgresos");
+  let email= recuperaraTexto("txtEmail");
+
 
   let cliente = buscarCliente(cedula);
 
@@ -86,6 +88,9 @@ function guardarCliente(){
       nuevoCliente.apellido = apellido;
       nuevoCliente.ingresos = ingresos;
       nuevoCliente.egresos = egresos;
+      nuevoCliente.email = email;
+
+
 
       clientes.push(nuevoCliente);
 
@@ -96,6 +101,8 @@ function guardarCliente(){
       clienteSeleccionado.apellido = apellido;
       clienteSeleccionado.ingresos = ingresos;
       clienteSeleccionado.egresos = egresos;
+      clienteSeleccionado.email = email;
+
 
       clienteSeleccionado = null;
 
@@ -120,8 +127,9 @@ function pintarClientes(){
             "<td>" + cliente.apellido + "</td>" +
             "<td>" + cliente.ingresos + "</td>" +
             "<td>" + cliente.egresos + "</td>" +
+            "<td>" + cliente.email + "</td>" +
             "<td> <button onclick='seleccionarCliente(" + cliente.cedula + ")'>Actualizar</button>" +
-            "<button onclick='eliminarCliente(" + cliente.cedula + ")'>Eliminar</button></td>"
+            "<button onclick='eliminarCliente(" + cliente.cedula + ")'>Eliminar</button></td>" +
         "</tr>";
 
     }
@@ -153,6 +161,7 @@ function seleccionarCliente(cedula){
     mostrarTextoEnCaja("txtApellido", cliente.apellido);
     mostrarTextoEnCaja("txtIngresos", cliente.ingresos);
     mostrarTextoEnCaja("txtEgresos", cliente.egresos);
+    mostrarTextoEnCaja("txtEmail", cliente.email);
     }
 
 }
@@ -172,7 +181,8 @@ function buscarClienteCredito(){
               "<p><strong>Nombre:</strong> " + cliente.nombre + "</p>" +
               "<p><strong>Apellido:</strong> " + cliente.apellido + "</p>" +
               "<p><strong>Ingresos:</strong> " + cliente.ingresos + "</p>" +
-              "<p><strong>Egresos:</strong> " + cliente.egresos + "</p>";
+              "<p><strong>Egresos:</strong> " + cliente.egresos + "</p>" +
+              "<p><strong>Email:</strong> " + cliente.email + "</p>";
 
         document.getElementById("datosClienteCredito").innerHTML = datos;
     }
@@ -185,6 +195,7 @@ function limpiar (){
   document.getElementById("txtApellido").value= "";
   document.getElementById("txtIngresos").value= "";
   document.getElementById("txtEgresos").value= "";
+  document.getElementById("txtEmail").value= "";
 }
 
 function eliminarCliente(cedula){
@@ -242,3 +253,4 @@ function calcularCredito(){
 function solicitarCredito(){
     alert("Su crédito ha sido aprobado");
 }
+
