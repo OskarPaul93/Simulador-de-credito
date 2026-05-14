@@ -36,6 +36,11 @@ function ocultarSecciones(){
   listaClass3.remove("activa");
 
 
+  let componente5 = document.getElementById("listaCreditos");
+  let listaClass5 = componente5.classList;
+  listaClass5.remove("activa");
+
+
 }
 
 function mostrarSeccion(id) { // funcion q activa parte visual
@@ -277,4 +282,52 @@ function asignarCredito(){
     alert("Crédito asignado correctamente");
 
     console.log(creditos);
+}
+
+
+
+function buscarCreditos(cedula){
+    let listaCreditos = [];
+    for(let i = 0; i < creditos.length; i++){
+        let elementoCredito = creditos[i];
+
+        if(elementoCredito.cedula == cedula){
+            listaCreditos.push(elementoCredito);
+        }
+    }
+
+    return listaCreditos;
+}
+
+
+function pintarCreditos(creditos){
+    let tabla = document.getElementById("tablaCreditos");
+    let contenido = "";
+
+    for(let i = 0; i < creditos.length; i++){
+
+        let elementoCredito = creditos[i];
+
+        contenido += 
+        "<tr>" +
+            "<td>" + elementoCredito.cedula + "</td>" +
+            "<td>" + elementoCredito.nombre + "</td>" +
+            "<td>" + elementoCredito.apellido + "</td>" +
+            "<td>" + elementoCredito.monto + "</td>" +
+            "<td>" + elementoCredito.tasa + "%</td>" +
+            "<td>" + elementoCredito.plazo + "</td>" +
+            "<td>" + elementoCredito.cuota + "</td>" +
+        "</tr>";
+    }
+
+    tabla.innerHTML = contenido;
+}
+
+
+
+function buscarCreditosCliente(){
+    let cedula = recuperaraTexto("buscarCedulaListado");
+    let creditosEncontrados = buscarCreditos(cedula);
+
+    pintarCreditos(creditosEncontrados);
 }
