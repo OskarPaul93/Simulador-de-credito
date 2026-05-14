@@ -213,6 +213,7 @@ function calcularCredito(){
 
     let cedula = recuperaraTexto("buscarCedulaCredito");
     let cliente = buscarCliente(cedula);
+    clienteSeleccionado= cliente;
 
     if(cliente == null){
         document.getElementById("resultadoCredito").innerHTML =
@@ -227,9 +228,14 @@ function calcularCredito(){
     let interes = calcularInteresSimple(monto, tasaInteres, plazo);
     let totalPagar = calcularTotalPagar(monto, interes);
     let cuotaMensual = calcularCuotaMensual(totalPagar, plazo);
+    cuotaCalculada= cuotaMensual;
+    montoCalculado=monto;
+    plazoCalculado= plazo;
+
+
     let aprobado = aprobarCredito(capacidadPago, cuotaMensual);
     let resultadoCredito =document.getElementById("resultadoCredito");
-    let boton = document.getElementById("btnSolicitarCredito");
+    let boton = document.getElementById("btnAsignarCredito");
 
     let resultado = "";
 
@@ -254,3 +260,21 @@ function solicitarCredito(){
     alert("Su crédito ha sido aprobado");
 }
 
+function asignarCredito(){
+
+    let credito = {
+        cedula: clienteSeleccionado.cedula,
+        nombre: clienteSeleccionado.nombre,
+        apellido: clienteSeleccionado.apellido,
+        monto: montoCalculado,
+        tasa: tasaInteres,
+        plazo: plazoCalculado,
+        cuota: cuotaCalculada
+    };
+
+    creditos.push(credito);
+
+    alert("Crédito asignado correctamente");
+
+    console.log(creditos);
+}
