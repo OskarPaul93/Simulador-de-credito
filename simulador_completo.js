@@ -282,6 +282,8 @@ function asignarCredito(){
     alert("Crédito asignado correctamente");
 
     console.log(creditos);
+
+    document.getElementById("btnAsignarCredito").disabled = true 
 }
 
 
