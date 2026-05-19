@@ -3,6 +3,7 @@
   let creditos = [];
 
   let tasaInteres = 15;
+  let montoMaximo= 50000; 
   let clienteSeleccionado = null;
   let cuotaCalculada = 0;
   let montoCalculado = 0;
@@ -40,6 +41,10 @@ function ocultarSecciones(){
   let listaClass5 = componente5.classList;
   listaClass5.remove("activa");
 
+  let componente6 = document.getElementById("contacto");
+  let listaClass6 = componente6.classList;
+  listaClass6.remove("activa");
+
 
 }
 
@@ -62,6 +67,19 @@ function guardarTasa(){
   }
 }
 
+function guardarMontoMaximo(){
+    let monto = recuperarFloat("montoMaximo");
+    if(monto > 0){
+        montoMaximo = monto;
+        mostrarTexto("mensajeMonto", "Monto máximo configurado correctamente: " + montoMaximo);
+    }else{
+        mostrarTexto("mensajeMonto", "Ingrese un monto válido");
+    }
+}
+
+
+
+
 
 function guardarCliente(){
 
@@ -71,6 +89,7 @@ function guardarCliente(){
   let ingresos = recuperarFloat("txtIngresos");
   let egresos = recuperarFloat("txtEgresos");
   let email= recuperaraTexto("txtEmail");
+  let telefono= recuperarFloat("txtTelefono");
 
 
   let cliente = buscarCliente(cedula);
@@ -94,6 +113,7 @@ function guardarCliente(){
       nuevoCliente.ingresos = ingresos;
       nuevoCliente.egresos = egresos;
       nuevoCliente.email = email;
+      nuevoCliente.telefono = telefono;
 
 
 
@@ -107,6 +127,7 @@ function guardarCliente(){
       clienteSeleccionado.ingresos = ingresos;
       clienteSeleccionado.egresos = egresos;
       clienteSeleccionado.email = email;
+      clienteSeleccionado.telefono = telefono;
 
 
       clienteSeleccionado = null;
@@ -133,6 +154,7 @@ function pintarClientes(){
             "<td>" + cliente.ingresos + "</td>" +
             "<td>" + cliente.egresos + "</td>" +
             "<td>" + cliente.email + "</td>" +
+            "<td>" + cliente.telefono + "</td>" +
             "<td> <button onclick='seleccionarCliente(" + cliente.cedula + ")'>Actualizar</button>" +
             "<button onclick='eliminarCliente(" + cliente.cedula + ")'>Eliminar</button></td>" +
         "</tr>";
@@ -167,6 +189,7 @@ function seleccionarCliente(cedula){
     mostrarTextoEnCaja("txtIngresos", cliente.ingresos);
     mostrarTextoEnCaja("txtEgresos", cliente.egresos);
     mostrarTextoEnCaja("txtEmail", cliente.email);
+    mostrarTextoEnCaja("txtTelefono", cliente.telefono);
     }
 
 }
@@ -187,7 +210,8 @@ function buscarClienteCredito(){
               "<p><strong>Apellido:</strong> " + cliente.apellido + "</p>" +
               "<p><strong>Ingresos:</strong> " + cliente.ingresos + "</p>" +
               "<p><strong>Egresos:</strong> " + cliente.egresos + "</p>" +
-              "<p><strong>Email:</strong> " + cliente.email + "</p>";
+              "<p><strong>Email:</strong> " + cliente.email + "</p>"+
+              "<p><strong>Telefono:</strong> " + cliente.telefono + "</p>";
 
         document.getElementById("datosClienteCredito").innerHTML = datos;
     }
@@ -201,6 +225,7 @@ function limpiar (){
   document.getElementById("txtIngresos").value= "";
   document.getElementById("txtEgresos").value= "";
   document.getElementById("txtEmail").value= "";
+  document.getElementById("txtTelefono").value= "";
 }
 
 function eliminarCliente(cedula){
@@ -227,6 +252,12 @@ function calcularCredito(){
     }
 
     let monto = recuperarFloat("montoCredito");
+    if(monto > montoMaximo){ document.getElementById("resultadoCredito").innerHTML ="ERROR: El monto solicitado supera el monto máximo permitido";
+        document.getElementById("montoCredito").value = "";
+        return;
+    }
+
+
     let plazo = recuperarFloat("plazoCredito");
     let disponible = calcularDisponible(cliente.ingresos, cliente.egresos);
     let capacidadPago = calcularCapacidadPago(disponible);
@@ -332,4 +363,14 @@ function buscarCreditosCliente(){
     let creditosEncontrados = buscarCreditos(cedula);
 
     pintarCreditos(creditosEncontrados);
+}
+
+
+function mostrarCreditosVIP(){
+    let creditosVIP = [];
+    for(let i = 0; i < creditos.length; i++){
+        let credito = creditos[i];
+        if(credito.monto > 5000){creditosVIP.push(credito);}
+    }
+    pintarCreditos(creditosVIP);
 }

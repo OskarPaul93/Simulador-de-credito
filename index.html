@@ -17,7 +17,7 @@
   <button onclick="mostrarSeccion('credito')">Creditos</button>
   <button onclick="mostrarSeccion('listaCreditos')">Creditos Registrados</button>
 
-  <button onclick="mostrarSeccion('contacto')">Contactos</button>
+  <button onclick="mostrarSeccion('contacto')">Acerca de</button>
 
   
 
@@ -35,6 +35,19 @@
   <button onclick="guardarTasa ();">Guardar tasa</button>
 
   <p id="mensajeTasa"></p>
+
+  <br>
+
+  <label>Monto máximo:</label>
+  <input type="number" id="montoMaximo" min="1" max="50000" value="50000">
+
+  <br>
+  <button onclick="guardarMontoMaximo()">Guardar monto máximo</button>
+
+  <p id="mensajeMonto"></p>
+
+
+
 </section>
 
 <section id="clientes" > <!--class="activa"-->
@@ -46,6 +59,7 @@
   <input type="number" id="txtIngresos" placeholder="Ingrese ingresos" min="0">
   <input type="number" id="txtEgresos" placeholder="Ingrese egresos" min="0">
   <input type="email" id="txtEmail" placeholder="Ingrese email">
+  <input type="number" id="txtTelefono" placeholder="Ingrese telefono">
 
 
   <br>
@@ -62,6 +76,7 @@
         <th>Ingresos</th>
         <th>Egresos</th>
         <th>Email</th>
+        <th>Telefono</th>
         <th>Acciones</th>
 
       </tr>
@@ -103,6 +118,7 @@
   <input type="text" id="buscarCedulaListado" >
   <button onclick="buscarCreditosCliente()">Buscar</button>
   <button onclick="pintarCreditos(creditos)">Ver todos</button>
+  <button onclick="mostrarCreditosVIP()">Créditos VIP</button>
 
   <table>
     <thead>
@@ -124,7 +140,14 @@
 
 
 <section  id="contacto">
-  <h2>Desarrollado por Oscar Jami</h2>
+  <h3>Desarrollado por Oscar Jami</h3>
+  <h3>Mi profesión es Ingenieria de Petroleos</h3>
+  <h3>En redes me encuentran como Oscar Paul</h3>
+  <h3>Mi frase personal es: Todos los dias se aprende algo nuevo</h3>
+  <h3>Mi desporte favorito es el ciclismo</h3>
+  <h3>Me gusta la carrera de programacion y espero algun dia poder involucrarlo con mi profesion </h3>
+  <img src="foto paul.jpeg" alt="Mi foto" width="200">
+
 </section>
 
 
